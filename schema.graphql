@@ -8,7 +8,6 @@ type Leaf @entity {
   id: ID!
   root: BigInt!
   deposit: Deposit!
-  withdrawal: Withdrawal
   sender: Account!
   amount: BigInt!
 }
@@ -30,6 +29,7 @@ type Withdrawal @entity(immutable: true) {
   to: Account! # address
   nullifierHash: BigInt! # uint256
   blockNumber: BigInt!
+  leaf: Leaf
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }

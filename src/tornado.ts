@@ -21,15 +21,15 @@ export function handleWithdrawal(event: WithdrawalEvent): void {
 
 
 export function handleWithdrawalCall(call: WithdrawCall): void {
-  log.info("ROOT", [call.inputs.input[0].toString()])
+  log.info("ROOT {}", [call.inputs.input[0].toString()])
     let leaf = Leaf.load(call.inputs.input[0].toString());
     if(!leaf) {
       log.info("LEAF NOT FOUND", [call.transaction.hash.toHexString()])
     } else {
       let withdrawal = Withdrawal.load(call.transaction.hash);
       if(withdrawal) {
-        leaf.withdrawal = call.transaction.hash
-        leaf.save()
+        withdrawal.leaf = leaf.id;
+        withdrawal.save()
       }
       else{ 
         log.info("WITHDRAWALAL DOESNT EXIST = {}", [call.transaction.hash.toHexString()])
