@@ -1,0 +1,35 @@
+type Account @entity {
+  id: ID!
+  deposits: [Deposit!] @derivedFrom(field: "sender")
+  withdrawals: [Withdrawal!] @derivedFrom(field: "to")
+}
+
+type Leaf @entity {
+  id: ID!
+  root: BigInt!
+  deposit: Deposit!
+  withdrawal: Withdrawal
+  sender: Account!
+  amount: BigInt!
+}
+
+type Deposit @entity(immutable: true) {
+  id: Bytes!
+  root: BigInt! # uint256
+  amount: BigInt!
+  sender: Account!
+  hashPairings: [BigInt!]! # uint256[10]
+  pairDirection: [Int!]! # uint8[10]
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Withdrawal @entity(immutable: true) {
+  id: Bytes!
+  to: Account! # address
+  nullifierHash: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

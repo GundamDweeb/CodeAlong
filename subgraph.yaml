@@ -1,0 +1,30 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Tornado
+    network: goerli
+    source:
+      address: "0x06DB9c2856Eab779B2794E98c769a2e6aDA4D4b6"
+      abi: Tornado
+      startBlock: 8258999
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Deposit
+        - Withdrawal
+      abis:
+        - name: Tornado
+          file: ./abis/Tornado.json
+      eventHandlers:
+        - event: Deposit(uint256,uint256[10],uint8[10])
+          handler: handleDeposit
+        - event: Withdrawal(address,uint256)
+          handler: handleWithdrawal
+      callHandlers:
+        - function: withdraw(uint256[2],uint256[2][2],uint256[2],uint256[2])
+          handler: handleWithdrawalCall
+      file: ./src/tornado.ts

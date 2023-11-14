@@ -1,0 +1,8 @@
+{
+  "goerli": {
+    "Tornado": {
+      "address": "0x06DB9c2856Eab779B2794E98c769a2e6aDA4D4b6",
+      "startBlock": 8258999
+    }
+  }
+}
